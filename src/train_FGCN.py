@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 from utils import  accuracy,load_german,load_credit,load_income,load_bail
-from models.FairGNN import FairGNN
+from models.IFGCN import IFGCN
 from torch_geometric.utils import dropout_adj, convert, to_networkx
 # Training settings
 parser = argparse.ArgumentParser()
@@ -41,9 +41,9 @@ parser.add_argument("--attn-drop", type=float, default=.0,
 parser.add_argument('--negative-slope', type=float, default=0.2,
                     help="the negative slope of leaky relu")
 parser.add_argument('--acc', type=float, default=0,
-                    help='the selected FairGNN accuracy on val would be at least this high')
+                    help='the selected IFGCN accuracy on val would be at least this high')
 parser.add_argument('--roc', type=float, default=0,
-                    help='the selected FairGNN ROC score on val would be at least this high')
+                    help='the selected IFGCN ROC score on val would be at least this high')
 parser.add_argument('--sens_number', type=int, default=200,
                     help="the number of sensitive attributes")
 parser.add_argument('--label_number', type=int, default=500,
@@ -183,7 +183,7 @@ if sens_attr:
     sens[sens>0]=1
 # Model and optimizer
 root_path, _ = os.path.split(os.path.abspath(__file__))
-model = FairGNN(nfeat = features.shape[1], args = args)
+model = IFGCN(nfeat = features.shape[1], args = args)
 #optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-5)
 #model.estimator.load_state_dict(torch.load(root_path+"/checkpoint/GCN_sens_{}_ns_{}".format(dataset,sens_number), map_location=torch.device('cpu')))
 if args.cuda:

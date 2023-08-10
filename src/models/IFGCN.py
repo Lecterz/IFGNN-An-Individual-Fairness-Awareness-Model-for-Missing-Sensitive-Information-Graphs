@@ -22,10 +22,10 @@ def get_model(nfeat, args):
 
     return model
 
-class FairGNN(nn.Module):
+class IFGCN(nn.Module):
 
     def __init__(self, nfeat, args):
-        super(FairGNN,self).__init__()
+        super(IFGCN,self).__init__()
 
         nhid = args.num_hidden
         dropout = args.dropout
